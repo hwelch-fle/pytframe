@@ -82,8 +82,8 @@ target/
 profile_default/
 ipython_config.py
 
-# ArcGIS
-*pyt.xml
+# ArcGIS (remove this if you want to track metadata for tools, it will clutter the repo)
+*.pyt.xml
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
