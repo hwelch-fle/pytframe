@@ -1,5 +1,5 @@
 from importlib import reload
-import traceback
+from traceback import format_exc
 
 import utils.dev
 reload(utils.dev)
@@ -14,14 +14,14 @@ try:
     reload(tools.project.ExampleTool)
     from tools.project.ExampleTool import ExampleTool
 except Exception as e:
-    ExampleTool = build_dev_error("Example Tool", traceback.format_exc())
+    ExampleTool = build_dev_error("Example Tool", format_exc())
     
 try:
     import tools.project.FailingTool
     reload(tools.project.FailingTool)
     from tools.project.FailingTool import FailingTool
 except Exception as e:
-    FailingTool = build_dev_error("Failing Tool (check my description)", traceback.format_exc())
+    FailingTool = build_dev_error("Failing Tool (check my description)", format_exc())
 
 class Toolbox(object):
     def __init__(self):
