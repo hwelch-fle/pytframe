@@ -154,7 +154,7 @@ def insert_row(features:str, fields:list[str], query:str, row:list[list]) -> int
         cursor.insertRow(row)
     return
 
-def print_layout(layout=None, quality:str="BEST", resolution:int=300, is_mapseries=False):
+def print_layout(layout=None, quality:str="BEST", resolution:int=300, is_mapseries=False, page_name:str="LAYOUT"):
     """
     Prints the layout to a PDF
     @layout: The layout to print
@@ -166,7 +166,7 @@ def print_layout(layout=None, quality:str="BEST", resolution:int=300, is_mapseri
     temp = tempfile.mkdtemp()
     if is_mapseries:
         mapseries = layout
-        pdf = os.path.join(temp, f"{mapseries.pageRow.PageFinal}.pdf")
+        pdf = os.path.join(temp, f"{page_name}.pdf")
         return mapseries.exportToPDF(pdf, resolution=resolution, image_quality=quality, page_range_type="CURRENT")
     else:
         pdf = os.path.join(temp, f"{layout.name}.pdf")
