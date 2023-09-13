@@ -154,7 +154,7 @@ def insert_row(features:str, fields:list[str], query:str, row:list[list]) -> int
         cursor.insertRow(row)
     return
 
-def print_layout(layout=None, quality:str="BEST", resolution:int=300, is_mapseries=False, page_name:str="LAYOUT"):
+def print_layout(layout=None, page_name:str="LAYOUT", quality:str="BEST", resolution:int=300, is_mapseries:bool=False):
     """
     Prints the layout to a PDF
     @layout: The layout to print
