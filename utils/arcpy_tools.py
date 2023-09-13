@@ -153,3 +153,33 @@ def insert_row(features:str, fields:list[str], query:str, row:list[list]) -> int
     with arcpy.da.InsertCursor(features, fields, query) as cursor:
         cursor.insertRow(row)
     return
+
+def print_layout(layout=None, quality:str="BEST", resolution:int=300, is_mapseries=False):
+    """
+    Prints the layout to a PDF
+    @layout: The layout to print
+    @quality: The quality of the PDF (BEST, NORMAL, FASTEST)
+    @resolution: The resolution of the PDF (DPI)
+    @is_mapseries: Is the layout part of a map series (default is False)
+    @return: The PDF document
+    """
+    temp = tempfile.mkdtemp()
+    if is_mapseries:
+        mapseries = layout
+        pdf = os.path.join(temp, f"{mapseries.pageRow.PageFinal}.pdf")
+        return mapseries.exportToPDF(pdf, resolution=resolution, image_quality=quality, page_range_type="CURRENT")
+    else:
+        pdf = os.path.join(temp, f"{layout.name}.pdf")
+        return layout.exportToPDF(pdf, resolution=resolution, image_quality=quality)
+        
+def print_mapseries(mapseries=None, quality:str="BEST", resolution:int=300):
+    """
+    Iterates over a map series and prints to a list of PDFs
+    @mapseries: The map series to print
+    @quality: The quality of the PDF (BEST, NORMAL, FASTEST)
+    @resolution: The resolution of the PDF (DPI)
+    @return: A list of PDF documents
+    """
+    for page_num in range(1, mapseries.pageCount+1):
+        mapseries.currentPageNumber = page_num
+        yield print_layout(mapseries, quality, resolution, is_mapseries=True)
