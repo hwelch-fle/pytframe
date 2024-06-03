@@ -2,6 +2,7 @@ import arcpy
 import os
 import utils.arcpy_tools as archelp
 
+# NOTE: Tool file must match Class name (e.g. class MyTool -> MyTool.py)
 class Tool(object):
     """
     Base class for all tools that use python objects to build parameters,
@@ -13,12 +14,6 @@ class Tool(object):
     def __init__(self) -> None:
         """
         Tool Description
-
-        @self.project: arcpy project object
-        @self.project_location: path to the project
-        @self.project_name: name of the project
-        @self.default_gdb: path to the default gdb
-        @self.params: tool parameters (set with archelp.get_parameters())
         """
         # Tool parameters
         self.label = "Tool"
