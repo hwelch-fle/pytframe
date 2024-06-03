@@ -22,7 +22,6 @@ class MyTool(Tool):
         self.label = "Default Tool"
         
         # Parameters
-        self.params = {}
         self.my_number = 3
         
         return
