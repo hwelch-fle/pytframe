@@ -1,27 +1,33 @@
-from importlib import reload
-from traceback import format_exc
+from importlib import reload, invalidate_caches
+invalidate_caches()
 
 import utils.dev
 reload(utils.dev)
-from utils.dev import build_dev_error
+from utils.dev import import_tools
 
 import utils.arcpy_tools
 reload(utils.arcpy_tools)
 
-# TODO make this process a function
-try:
-    import tools.project.ExampleTool
-    reload(tools.project.ExampleTool)
-    from tools.project.ExampleTool import ExampleTool
-except ImportError:
-    ExampleTool = build_dev_error("Example Tool", format_exc())
-    
-try:
-    import tools.project.FailingTool
-    reload(tools.project.FailingTool)
-    from tools.project.FailingTool import FailingTool
-except ImportError:
-    FailingTool = build_dev_error("Failing Tool (check my description)", format_exc())
+import utils.constants
+reload(utils.constants)
+
+import utils.excel_tools
+reload(utils.excel_tools)
+
+import utils.tool
+reload(utils.tool)
+
+TOOLS = \
+{
+    "tools.project":
+        [
+            "ExampleTool",
+            "FailingTool",
+        ],
+}
+
+IMPORTS = import_tools(TOOLS)
+globals().update({tool.__name__: tool for tool in IMPORTS})
 
 class Toolbox(object):
     def __init__(self):
